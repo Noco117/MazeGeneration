@@ -1,0 +1,4 @@
+name = "MazeGeneration"
+uuid = "b8f5539e-ee3c-4488-9314-5353f5f15a37"
+authors = ["Noco117 <nicolai.prodanov@gmail.com>"]
+version = "0.1.0"
