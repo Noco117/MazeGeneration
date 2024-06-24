@@ -22,3 +22,11 @@ mutable struct Maze{}
     # visual::Union
     path::Union{Vector{Node}, Nothing}
 end
+
+function Base.getindex(maze::Maze, I...)
+    return getindex(Maze.nodes, I...)
+end
+
+function Base.setindex!(maze::Maze, v, I...)
+    setindex!(Maze.nodes, v, I...)
+end
