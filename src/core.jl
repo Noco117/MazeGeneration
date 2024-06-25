@@ -1,4 +1,8 @@
-mutable struct Node{}
+module Core
+
+export Node, Maze, neighbors
+
+mutable struct Node
     key::Int
 
     up::Union{Node, Nothing}
@@ -17,7 +21,7 @@ function neighbors(node::Node)::Vector{Node}
     return temp
 end
 
-mutable struct Maze{}
+mutable struct Maze
     nodes::Matrix{Node}
     # visual::Union
     path::Union{Vector{Node}, Nothing}
@@ -29,4 +33,6 @@ end
 
 function Base.setindex!(maze::Maze, v, I...)
     setindex!(Maze.nodes, v, I...)
+end
+
 end
