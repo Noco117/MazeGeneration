@@ -2,3 +2,7 @@ name = "MazeGeneration"
 uuid = "b8f5539e-ee3c-4488-9314-5353f5f15a37"
 authors = ["Noco117 <nicolai.prodanov@gmail.com>"]
 version = "0.1.0"
+
+[deps]
+DataStructures = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
