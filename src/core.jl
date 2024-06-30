@@ -25,6 +25,8 @@ mutable struct Maze
     nodes::Matrix{Node}
     # visual::Union
     path::Union{Vector{Node}, Nothing}
+
+    Maze(nodes::Matrix{Node}) = new(nodes, nothing)
 end
 
 function Base.getindex(maze::Maze, I...)

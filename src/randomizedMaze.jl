@@ -56,5 +56,5 @@ function maze(height::Int, width::Int)::Maze
         push!(stack, (next_node, i, j))
     end
 
-    return Maze(nodes, nothing)
+    return Maze(nodes)
 end
