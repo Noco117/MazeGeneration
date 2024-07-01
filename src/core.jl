@@ -4,7 +4,7 @@ export Node, Maze, MazeViz, neighbors
 
 
 mutable struct Node
-    key::Int
+    key::Tuple{Int, Int}
 
     up::Union{Node, Nothing}
     down::Union{Node, Nothing}
@@ -44,19 +44,12 @@ mutable struct Maze
     startNode::Union{Tuple{Int, Int}, Nothing}
     endNode::Union{Tuple{Int, Int}, Nothing}
 
-    Maze(height::Int, width::Int) = new([Node(0, nothing, nothing, nothing, nothing) for i in 1:height, j in 1:width], nothing, nothing, nothing, nothing)
+    Maze(height::Int, width::Int) = new([Node((0, 0), nothing, nothing, nothing, nothing) for i in 1:height, j in 1:width], nothing, nothing, nothing, nothing)
 end
 
 
-function Base.getindex(maze::Maze, I...)
-    return getindex(maze.nodes, I...)
-end
-
-
-function Base.setindex!(maze::Maze, v, I...)
-    setindex!(maze.nodes, v, I...)
-end
-
+Base.getindex(maze::Maze, I...) = getindex(maze.nodes, I...)
+Base.setindex!(maze::Maze, v, I...) = setindex!(maze.nodes, v, I...)
 Base.size(maze::Maze) = size(maze.nodes)
 
 

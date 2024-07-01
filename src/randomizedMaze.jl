@@ -22,13 +22,13 @@ function maze(height::Int, width::Int)::Maze
     #Führt randomisierte Tiefensuche aus also wird immer ein zufälliger unbesuchter Knoten in den Stack hinzugefügt
     while !isempty(stack)
         node, i, j = top(stack)
-        node.key = 1# Markiert Knoten als besucht
+        node.key = (i, j)# Markiert Knoten als besucht
 
 
         # Überprüft für alle Richtungen ob Knoten ob es benachbarte Knoten gibt, bzw ob in der Richtung ein Rand ist.
         # Dann werden alle Richtungen in einer Liste gespeichert, für die sich der Knoten, der sich in der Richtung befindet noch unbesucht ist
         adjacent_dirs = [x for x in [[-1, 0], [1, 0], [0, -1], [0, 1]] if 1 <= x[1] + i && x[1] + i <= height && 1 <= x[2] + j && x[2] + j <= width]
-        unvisited_adjacent_dirs = [coord for coord in adjacent_dirs if rmaze[i + coord[1], j + coord[2]].key == 0]
+        unvisited_adjacent_dirs = [coord for coord in adjacent_dirs if rmaze[i + coord[1], j + coord[2]].key == (0, 0)]
         
         if isempty(unvisited_adjacent_dirs)
             pop!(stack)
