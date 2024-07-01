@@ -22,7 +22,7 @@ function maze(height::Int, width::Int)::Maze
     #Führt randomisierte Tiefensuche aus also wird immer ein zufälliger unbesuchter Knoten in den Stack hinzugefügt
     while !isempty(stack)
         node, i, j = top(stack)
-        node.key = 1 # Markiert Knoten als besucht
+        node.key = 1# Markiert Knoten als besucht
 
 
         # Überprüft für alle Richtungen ob Knoten ob es benachbarte Knoten gibt, bzw ob in der Richtung ein Rand ist.
@@ -59,6 +59,7 @@ function maze(height::Int, width::Int)::Maze
         push!(stack, (next_node, i, j))
     end
 
-    rmaze.startNode = rmaze[rand(1:height), rand(1:width)]
+    rmaze.startNode = (rand(1:height), rand(1:width))
+    rmaze.endNode = (rand(1:height), rand(1:width))
     return rmaze
 end

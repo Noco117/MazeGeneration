@@ -41,8 +41,8 @@ mutable struct Maze
     visual::Union{MazeViz, Nothing}
     path::Union{Vector{Node}, Nothing}
 
-    startNode::Union{Node, Nothing}
-    endNode::Union{Node, Nothing}
+    startNode::Union{Tuple{Int, Int}, Nothing}
+    endNode::Union{Tuple{Int, Int}, Nothing}
 
     Maze(height::Int, width::Int) = new([Node(0, nothing, nothing, nothing, nothing) for i in 1:height, j in 1:width], nothing, nothing, nothing, nothing)
 end

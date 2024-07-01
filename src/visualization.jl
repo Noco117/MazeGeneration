@@ -15,6 +15,9 @@ function visualize(maze::Maze)::MazeViz
             viz[row, (column + 1)] = Int(isnothing(maze[i, j].right))
         end
     end
+    viz[2maze.startNode[1], 2maze.startNode[2]] = 3
+    viz[2maze.endNode[1], 2maze.endNode[2]] = 4
+
     maze.visual = viz
     return viz
 end
@@ -27,7 +30,11 @@ function Base.show(io::IO, viz::MazeViz)
             elseif viz[i, j] == 1
                 print("██")
             elseif viz[i, j] == 2
-                print("·")
+                print("··")
+            elseif viz[i, j] == 3
+                print("● ")
+            elseif viz[i, j] == 4
+                print("* ")
             end
         end
         print("\n")
