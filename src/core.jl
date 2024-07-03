@@ -12,6 +12,7 @@ mutable struct Node
     right::Union{Node, Nothing}
 end
 
+Base.show(node::Node) = node.key
 
 function neighbors(node::Node)::Vector{Node}
     temp::Vector{Node} = []
