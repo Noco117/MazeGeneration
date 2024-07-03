@@ -29,12 +29,30 @@ mutable struct MazeViz <:  AbstractMatrix{Int}
 end
 
 Base.size(viz::MazeViz) = size(viz.data)
-
 Base.getindex(viz::MazeViz, i::Int, j::Int) = viz.data[i, j]
-
 Base.setindex!(viz::MazeViz, v::Int, i::Int, j::Int) = (viz.data[i, j] = v)
 
 
+function Base.show(io::IO, viz::MazeViz)
+    for i in 1:size(viz)[1]
+        for j in 1:size(viz)[2]
+            if viz[i, j] == 0
+                print("  ")
+            elseif viz[i, j] == 1
+                print("██")
+            elseif viz[i, j] == 2
+                printstyled("██"; color = :red)
+            elseif viz[i, j] == 3
+                print("● ")
+            elseif viz[i, j] == 4
+                print("* ")
+            end
+        end
+        print("\n")
+    end
+end
+
+Base.show(io::IO, ::MIME"text/plain", viz::MazeViz) = show(io, viz)
 
 mutable struct Maze
     nodes::Matrix{Node}
@@ -52,5 +70,6 @@ Base.getindex(maze::Maze, I...) = getindex(maze.nodes, I...)
 Base.setindex!(maze::Maze, v, I...) = setindex!(maze.nodes, v, I...)
 Base.size(maze::Maze) = size(maze.nodes)
 
+Base.show(io::IO, maze::Maze) = show(io, maze.visual)
 
 end # Module Core

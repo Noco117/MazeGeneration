@@ -15,28 +15,19 @@ function visualize(maze::Maze)::MazeViz
             viz[row, (column + 1)] = Int(isnothing(maze[i, j].right))
         end
     end
-    viz[2maze.startNode[1], 2maze.startNode[2]] = 3
-    viz[2maze.endNode[1], 2maze.endNode[2]] = 4
+
+    if !isnothing(maze.path)
+        for i in 1:(length(maze.path)-1)
+            current_node = maze.path[i]
+            next = maze.path[i + 1]
+
+            viz[(2 .* current_node.key)...] = 2
+            viz[((2 .* current_node.key) .+ (next.key .- current_node.key))...] = 2
+        end
+    end
+    viz[(2 .* maze.startNode)...] = 3
+    viz[(2 .* maze.endNode)...] = 4
 
     maze.visual = viz
     return viz
-end
-
-function Base.show(io::IO, viz::MazeViz)
-    for i in 1:size(viz)[1]
-        for j in 1:size(viz)[2]
-            if viz[i, j] == 0
-                print("  ")
-            elseif viz[i, j] == 1
-                print("██")
-            elseif viz[i, j] == 2
-                print("··")
-            elseif viz[i, j] == 3
-                print("● ")
-            elseif viz[i, j] == 4
-                print("* ")
-            end
-        end
-        print("\n")
-    end
 end
