@@ -1,9 +1,11 @@
 using ..Core
 using Random
 
+# Gibt einen weg aus, und ersetzt damit das path Feld des Eingabe-Mazes,
+# der durch die Suche mit der Rechten-Hand-Regel entsteht
 function solve(maze::Maze)::Vector{Node}
 
-
+    # Definiert Maps von den Richtungen als Strings zu Ints
     directions = ["left", "up", "right", "down"]
     left_to_right = Dict(
         "left" => 1,
@@ -12,7 +14,7 @@ function solve(maze::Maze)::Vector{Node}
         "down" => 4,
     )
 
-
+    # Findet für einen Knoten und eine Richtung den Knoten in im Maze der sich in der Richtung befindet
     function getNode(node::Node, direction::String)
         @assert direction in directions
         if direction == "up"
@@ -26,9 +28,13 @@ function solve(maze::Maze)::Vector{Node}
         end
     end
 
+    # hasWall überprüft ob es eine Wand in der gefragten Richtung gibt
     hasWall(node::Node, direction::String) = isnothing(getNode(node, direction))
+
+    # turnRight und turnReft geben für einen Richtungsstring jeweils die Richtung aus, die man erhält wenn man sich um
+    # 90° im bzw. gegen den Uhrzeigersinn dreht
+
     turnRight(direction::String) = directions[(left_to_right[direction] % 4) + 1]
-    
     function turnLeft(direction::String)::String 
         if direction == "left"
             return "down"
@@ -37,93 +43,41 @@ function solve(maze::Maze)::Vector{Node}
         end
     end
 
-
+    # Initialisiert leeren Weg, Anfangs und endKnoten und die wählt zufällige Richtung aus
     path = Vector{Node}()
     current = maze[maze.startNode...]
     endNode = maze[maze.endNode...]
     facing_dir = rand(directions)
 
-    i = 10
-    while current != endNode# && i < 100
-        i = i + 1
+    # Findet Weg mit der rechten Hand Regel
+    while current != endNode
+        
+        # Fügt unbesuchte Knoten in den Weg ein
         if !(current in path)
             push!(path, current)
         end
 
+        # Rotiert nach Rechts
         facing_dir = turnRight(facing_dir)
         
+        # Rotiert solange nach links, bis die Richtung begehbar ist
         while hasWall(current, facing_dir)
             facing_dir = turnLeft(facing_dir)
         end
-
-        if getNode(current, facing_dir) in path
-            pop!(path)
-        end
+        
+        # geht zum nächsten Knoten
 
         current = getNode(current, facing_dir)
+
+        # Falls nächster Knoten schon im Path ist wird gebacktracked, indem der letzte Knoten entfernt aus dem Array entfernt wird
+        if current in path
+            pop!(path)
+        end
     end
+    
+    #Endknoten wird seperat hinzugefügt
     push!(path, current)
 
     maze.path = path
     return path
 end
-
-# function solve(maze::Maze)::Vector{Node}
-#     # Direction vectors
-#     directions = Dict(
-#         "up" => (-1, 0),
-#         "right" => (0, 1),
-#         "down" => (1, 0),
-#         "left" => (0, -1)
-#     )
-    
-#     # Turn right mapping
-#     turn_right = Dict(
-#         "up" => "right",
-#         "right" => "down",
-#         "down" => "left",
-#         "left" => "up"
-#     )
-
-#     # Turn left mapping
-#     turn_left = Dict(
-#         "up" => "left",
-#         "left" => "down",
-#         "down" => "right",
-#         "right" => "up"
-#     )
-    
-#     function move(node::Node, direction::String)
-#         d = directions[direction]
-#         return maze[node.key[1] + d[1], node.key[2] + d[2]]
-#     end
-    
-#     function has_wall(node::Node, direction::String)
-#         neighbor = move(node, direction)
-#         return isnothing(neighbor)
-#     end
-
-#     # Initialize
-#     path = Vector{Node}()
-#     current_node = maze[maze.startNode...]
-#     end_node = maze[maze.endNode...]
-#     current_direction = "up"
-
-#     while current_node != end_node
-#         right_direction = turn_right[current_direction]
-
-#         if !has_wall(current_node, right_direction)
-#             current_direction = right_direction
-#             current_node = move(current_node, current_direction)
-#         elseif !has_wall(current_node, current_direction)
-#             current_node = move(current_node, current_direction)
-#         else
-#             current_direction = turn_left[current_direction]
-#         end
-        
-#         push!(path, current_node)
-#     end
-
-#     Maze(maze).path = path
-#     return path
-# end
