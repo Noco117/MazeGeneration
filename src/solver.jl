@@ -31,7 +31,7 @@ function solve(maze::Maze)::Vector{Node}
     # hasWall überprüft ob es eine Wand in der gefragten Richtung gibt
     hasWall(node::Node, direction::String) = isnothing(getNode(node, direction))
 
-    # turnRight und turnReft geben für einen Richtungsstring jeweils die Richtung aus, die man erhält wenn man sich um
+    # turnRight und turnLeft geben für einen Richtungsstring jeweils die Richtung aus, die man erhält wenn man sich um
     # 90° im bzw. gegen den Uhrzeigersinn dreht
 
     turnRight(direction::String) = directions[(left_to_right[direction] % 4) + 1]
